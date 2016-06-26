@@ -13,21 +13,21 @@ Note: This ansible module is not ready yet and is still in development.
 
 
 
-# Vagrant
-
+## Vagrant
+```bash
 vagrant plugin install vagrant-env
 vagrant up
-
-# Openstack
-
-Need to test ansible provisioning and I'll update this section with results
-
-# EC2
+```
+## Openstack
 
 Need to test ansible provisioning and I'll update this section with results
 
+## EC2
+
+Need to test ansible provisioning and I'll update this section with results
 
 
-# License
+
+## License
 
 Licensed under the Apache License, Version 2.0.
