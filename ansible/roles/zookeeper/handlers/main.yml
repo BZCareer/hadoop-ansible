@@ -1,0 +1,11 @@
+---
+# handlers file for zookeeper
+ - name: reload systemd
+   sudo: yes
+   command: systemctl {{ item }}
+   with_items:
+     - stop zookeeper
+     - daemon-reload
+ - name: start zookeeper
+   sudo: yes
+   command: systemctl start zookeeper

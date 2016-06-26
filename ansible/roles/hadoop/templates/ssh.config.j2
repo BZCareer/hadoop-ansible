@@ -1,0 +1,17 @@
+Host hadoopmaster
+    ForwardAgent yes
+    ControlMaster auto
+    ControlPersist 30m
+    ControlPath /tmp/%r@%h:%p
+
+Host hadoopdata1
+    ForwardAgent yes
+    ControlMaster auto
+    ControlPersist 30m
+    ControlPath /tmp/%r@%h:%p
+
+Host hadoopdata2
+    ForwardAgent yes
+    ControlMaster auto
+    ControlPersist 30m
+    ControlPath /tmp/%r@%h:%p

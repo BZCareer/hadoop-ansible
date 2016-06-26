@@ -1,0 +1,110 @@
+---
+########################################################
+# tasks setting up hadoop (only supports single node). I'm working on making it work across cluster.
+# Author: Zak Hassan
+# Usage: ansible-playbook site.yml or make install
+#
+#
+# Description: Playbook created to demonstrate provisioning cloud environment in like less than 1 min. :)
+#####################################################
+
+- group: name={{ hadoop_gid }} state=present
+
+- user: name={{ hadoop_uid }} comment="hadoop" group={{ hadoop_gid }} shell=/bin/bash
+
+
+- name: stat /tmp/hadoop-2.7.1.tar.gz
+  stat: path=/tmp/hadoop-2.7.1.tar.gz
+  register: hadoop_binary_stat
+
+- name: Downloading Apache Hadoop
+  get_url: url=http://mirror.csclub.uwaterloo.ca/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz  dest=/tmp/hadoop-2.7.1.tar.gz
+  when: hadoop_binary_stat.stat.exists == False
+
+
+
+# So hadoop can ssh into alternate servers using hadoop acount
+# disabling ssh known key check not for production usage.
+- file: path=/home/hadoop/.ssh state=directory mode=0755
+
+
+- file: path=/home/hadoop/hadoop-data/hdfs/namenode state=directory mode=0755
+- file: path=/home/hadoop/hadoop-data/hdfs/datanode state=directory mode=0755
+# TODO: Need to change permissions in this folder so hadoop can create files in these folders for nodes
+- command: sudo chown -Rv hadoop:hadoop /home/hadoop/hadoop-data/
+
+- name: setup hosts file
+  template: src=ssh.config.j2   dest=/home/hadoop/.ssh/config
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/hadoop-2.7.1.tar.gz
+
+- authorized_key: user=hadoop key="{{ lookup('file', 'id_rsa.pub') }}"
+
+- name: copy hdfs_rsa key
+  copy: src=id_rsa dest=/home/hadoop/.ssh group={{ hadoop_gid }}
+
+- name: Uncompress Apache Hadoop tarball and place in /usr/local/
+  unarchive: src=/tmp/hadoop-2.7.1.tar.gz dest=/usr/local/ owner=hadoop group=hadoop creates=/usr/local/hadoop-2.7.1
+
+
+- name: stat {{ hadoop_install_dir }}
+  stat: path={{ hadoop_install_dir }}
+  register: hd_dir_stat
+
+- name: rename file
+  command: creates="{{ hadoop_install_dir }}" mv {{ hadoop_prefix_dir }}/{{ hadoop_version }}/  {{ hadoop_install_dir }}
+
+- name: change permissions to {{ hadoop_uid }} user with {{ hadoop_gid }} group for {{ hadoop_version }}
+  command: chown -R {{ hadoop_uid }}:{{ hadoop_gid }} {{ hadoop_install_dir }}
+# TODO: Need to use with_items here ...
+- name: setup core-site.xml file
+  template: src={{ item.name }}.j2
+        dest=/usr/local/hadoop/etc/hadoop/{{ item.name }}
+  with_items:
+    - { name: core-site.xml   }
+    - { name: hdfs-site.xml   }
+    - { name: mapred-site.xml }
+    - { name: yarn-site.xml   }
+
+# TODO: Need to create http://docs.ansible.com/ansible/authorized_key_module.html
+# So hadoop can ssh into alternate servers using hadoop acount
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HADOOP_HOME=" line="export HADOOP_HOME=/usr/local/hadoop"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="JAVA_HOME=" line="export JAVA_HOME=/usr/lib/jvm/java-1.7.0"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HIVE_HOME=" line="export HIVE_HOME=/usr/local/hive"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="PIG_HOME=" line="export PIG_HOME=/usr/local/pig"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="STORM_HOME=" line="export STORM_HOME=/usr/local/storm"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="SPARK_HOME=" line="export SPARK_HOME=/usr/local/spark"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HADOOP_CONF_DIR=" line="export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
+
+- lineinfile: dest=/home/hadoop/.bashrc regexp="PATH=" line="export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin:$HIVE_HOME/bin:$PIG_HOME/bin:$STORM_HOME/bin:$SPARK_HOME/bin"
+
+
+# - name: need to init env variables
+#   command: source /home/vagrant/.bashrc
+#   when: api_hostname == "hadoopmaster"
+#
+#
+# # only should be done once. You can skip this task by skip-tag in normal ansible provisioning
+# - name: format namenode only done once.
+#   command: /usr/local/hadoop/bin/hdfs namenode -format
+#   when: api_hostname == "hadoopmaster"
+#   tags:
+#     - hdfs_namenode_format
+
+# Create systemd files
+
+- name: copying slaves into conf location
+  template: src=slaves dest=/usr/local/hadoop/etc/hadoop/slaves owner={{ hadoop_uid }} group={{ hadoop_gid }}
+  when: api_hostname == "hadoopmaster"
+- name: setup systemd unit file
+  template: src={{ item.name }}.j2 dest=/lib/systemd/system/{{ item.name }}
+  with_items:
+    - { name: hadoop-dfs.service }
+    - { name: hadoop-yarn.service }
+    - { name: hadoop-job-history.service }
+  notify: reload systemd
+
+# export HADOOP_PREFIX=/usr/local/hadoop
+# export PATH=/usr/local/hadoop/bin:/usr/local/hadoop/sbin:$PATH
+# TODO: hdfs namenode -format & $HADOOP_PREFIX/sbin/start-dfs.sh &  $HADOOP_PREFIX/sbin/start-yarn.sh

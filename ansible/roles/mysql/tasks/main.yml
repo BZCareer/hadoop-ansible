@@ -1,0 +1,42 @@
+---
+# tasks file for mysql
+# Prereq: Install mysql for the metastore:   http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+# yum install mysql-server this will take time from the installation.
+#  yum install mysql-connector-java
+# ln -s /usr/share/java/mysql-connector-java.jar /usr/local/hive/lib/mysql-connector-java.jar
+# Need to configure hive to
+#
+#mysql> CREATE USER 'hiveuser'@'%' IDENTIFIED BY 'hivepassword';
+#mysql> GRANT all on *.* to 'hiveuser'@localhost identified by 'hivepassword';
+#mysql>  flush privileges;
+#
+# schematool -dbType mysql -initSchema -userName hiveuser -passWord hivepassword
+#
+#
+
+- name: mysql rpms
+  yum: name=http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm state=present
+
+- name: install mysql-rpms
+  command: yum install {{ item }} -y
+  with_items:
+    - gcc
+    - mysql-server
+    - mysql-connector-java
+    - mysql-devel
+    - python-devel
+    - python-pip
+
+# Make sure mysql service is running
+- name: enable mysql
+  sudo: yes
+  service: name=mysql enabled=yes state=started
+
+
+# You will need mysql-python to create users
+- name: Install the Python MySQLB module
+  pip: name=MySQL-python
+#  ansible localhost -m mysql_user -a "name=hiveuser password=hivepassword priv=*.*:ALL state=present" -s
+# create mysql user
+- mysql_user: name=hiveuser password=hivepassword priv=*.*:ALL state=present
+- mysql_user: name=hiveuser password=hivepassword priv=*.*:ALL state=present

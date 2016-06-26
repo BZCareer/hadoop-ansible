@@ -1,0 +1,14 @@
+---
+# vars file for hadoop
+hadoop_binary: hadoop-2.7.1.tar.gz
+hadoop_install_dir: /usr/local/hadoop
+hadoop_prefix_dir: /usr/local
+hadoop_version: hadoop-2.7.1
+hadoop_uid: hadoop
+hadoop_gid: hadoop
+hadoop_apache_mirror: http://apache.sunsite.ualberta.ca/hadoop/common
+hadoopmaster: 192.168.33.40
+servers:
+  - {name: hadoopdata1,  ip: 192.168.33.41 }
+  - {name: hadoopdata2,  ip: 192.168.33.42 }
+#  - {name: hadoopmaster, ip: 192.168.33.40 }

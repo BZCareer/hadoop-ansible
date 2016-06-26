@@ -1,0 +1,20 @@
+---
+# tasks file for pig
+
+- name: stat /tmp/pig-0.15.0.tar.gz
+  stat: path=/tmp/pig-0.15.0.tar.gz
+  register: pigbinary_stat
+
+- name: Downloading Apache Pig
+  get_url: url=http://apachemirror.ovidiudan.com/pig/pig-0.15.0/pig-0.15.0.tar.gz  dest=/tmp/pig-0.15.0.tar.gz
+  when: pigbinary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/pig-0.15.0.tar.gz
+
+
+- name: uncompress pig tarball and place in /usr/local/
+  unarchive: src=/tmp/pig-0.15.0.tar.gz dest=/usr/local/ owner=hadoop group=hadoop
+
+- name: rename file
+  command: creates="/usr/local/pig" mv /usr/local/pig-0.15.0/  /usr/local/pig

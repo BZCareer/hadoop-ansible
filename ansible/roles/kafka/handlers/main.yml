@@ -1,0 +1,8 @@
+---
+#handlers file for kafka
+ - name: reload systemd
+   sudo: yes
+   command: systemctl daemon-reload
+ - name: restart kafka
+   sudo: yes
+   command: systemctl restart

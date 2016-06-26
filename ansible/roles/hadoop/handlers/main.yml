@@ -1,0 +1,5 @@
+---
+# handlers file for hadoop
+- name: reload systemd
+  sudo: yes
+  command: systemctl daemon-reload

@@ -1,0 +1,9 @@
+---
+# vars file for zookeeper
+service_name: zookeeper
+zk_dir: /usr/local/zookeeper
+dataDir: /usr/local/zookeeper/logs
+syncLimit: 3
+initLimit: 5
+tickTime: 2000
+clientPort: 2181

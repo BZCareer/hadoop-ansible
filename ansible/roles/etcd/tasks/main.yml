@@ -1,0 +1,33 @@
+---
+########################################################
+# tasks setting up etcd (only supports single node). I'm working on making it work across cluster.
+# Author: Zak Hassan
+# Usage: ansible-playbook site.yml or make install
+#
+#
+# Description: Playbook created to demonstrate provisioning cloud environment in like less than 1 min. :)
+#####################################################
+- name: stat /tmp/{{ etcd_binary }}
+  stat: path=/tmp/{{ etcd_binary }}
+  register: hdbinary_stat
+  #- name: copy kafka to tmp folder
+  # copy: src={{ etcd_binary }} dest=/tmp/ group={{ etcd_gid }}
+  # when: hdbinary_stat.stat.exists == False
+  # tags:
+  #   - provision_copy_to_remote
+- name: download etcd from apache mirror
+  command: curl -L https://github.com/coreos/etcd/releases/download/v2.0.9/etcd-v2.0.9-linux-amd64.tar.gz -o etcd-v2.0.9-linux-amd64.tar.gz
+  tags:
+    - binary_download
+- name: unzip tarball and place in /usr/local/
+  command: tar zxvf /tmp/{{ etcd_binary }}  -C {{ etcd_prefix_dir }}
+  tags:
+    - provision_hdfs
+- name: stat {{ etcd_install_dir }}
+  stat: path={{ etcd_install_dir }}
+  register: hd_dir_stat
+- name: rename file
+  command: creates="{{ etcd_install_dir }}" mv {{ etcd_prefix_dir }}/{{ etcd_version }}/  {{ etcd_install_dir }}
+  when: hd_dir_stat.stat.exists == False
+- name: change permissions to {{ etcd_uid }} user with {{ etcd_gid }} group for {{ etcd_version }}
+  command: chown -R {{ etcd_uid }}:{{ etcd_gid }} {{ etcd_install_dir }}

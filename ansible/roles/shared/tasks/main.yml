@@ -1,0 +1,23 @@
+---
+# tasks file for env
+# TODO: Additional Things to install 'mysql-server' for hive metastore.
+# TODO: CREATE PLAYBOOK ROLE FOR GANGLIA
+# yum install http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.rpm
+
+
+# - name: install epel
+#   yum: name=epel-release state=latest
+
+- name: install  java7
+  yum: name=java-1.7.0-openjdk-devel.x86_64 state=latest
+
+# - name: install  zeromq
+#   yum: name=zeromq state=latest
+
+- name: setup hosts file
+  template: src=hosts.j2   dest=/etc/hosts
+  register: installing_hosts_config
+
+- name: setup bashrc file
+  template: src=bashrc.j2  dest={{ HOME }}/.bashrc
+  register: installing_hosts_config

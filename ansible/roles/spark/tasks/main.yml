@@ -1,0 +1,35 @@
+---
+# tasks file for spark
+# After installed go to http://hadoopmaster:4040/jobs/ to see the jobs executed
+# When Starting spark use the following format
+# spark-shell  --master  spark://hadoopmaster:7077 --jars /usr/local/spark/lib/mysql-connector-java.jar
+
+- name: stat /tmp/spark-1.6.1-bin-hadoop2.6.tgz
+  stat: path=/tmp/spark-1.6.1-bin-hadoop2.6.tgz
+  register: spark_binary_stat
+
+# trying out spark 2.0.0
+# http://d3kbcqa49mib13.cloudfront.net/spark-2.0.0-preview-bin-hadoop2.7.tgz
+
+- name: Downloading Apache Spark
+  get_url: url=http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz  dest=/tmp/spark-1.6.1-bin-hadoop2.6.tgz
+  when: spark_binary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/spark-1.6.1-bin-hadoop2.6.tgz
+
+- name: uncompress spark tarball and place in /usr/local/
+  unarchive: src=/tmp/spark-1.6.1-bin-hadoop2.6.tgz dest=/usr/local/ owner=hadoop group=hadoop
+
+- name: rename file
+  command: creates="/usr/local/spark" mv /usr/local/spark-1.6.1-bin-hadoop2.6/  /usr/local/spark
+
+- name: copying spark slaves conf
+  template: src=slaves.j2 dest=/usr/local/spark/conf/slaves owner={{ hadoop_uid }} group={{ hadoop_gid }}
+  when: api_hostname == "hadoopmaster"
+
+- name: setup spark property files
+  template: src={{ item.name }}.j2 dest=/usr/local/spark/conf/{{ item.name }} owner={{ hadoop_uid }} group={{ hadoop_gid }}
+  with_items:
+    - { name: spark-default.conf }
+    - { name: spark-env.sh  }

@@ -1,0 +1,31 @@
+---
+# Author: Zak Hassan
+# Usage: ansible-playbook site.yml or make install
+#
+#
+# Description: Playbook created to demonstrate provisioning cloud environment in like less than 1 min. :)
+#
+
+
+ - name: Configure Apache Zookeeper, Kafka, Storm, Spark, Hadoop On Cluster
+   sudo: True
+   hosts:
+     - hadoop-master-node
+     - hadoop-data1-node
+     - hadoop-data2-node
+   roles:
+     - { role: shared, when: "ansible_os_family == 'RedHat'" }
+     - { role: zookeeper, when: "ansible_os_family == 'RedHat'" }
+     - { role: hadoop, when: "ansible_os_family == 'RedHat'" }
+     - { role: kafka, when: "ansible_os_family == 'RedHat'" }
+     - { role: storm , when: "ansible_os_family == 'RedHat'" }
+     - { role: spark, when: "ansible_os_family == 'RedHat'" }
+
+ - name: Installing Big Data Utilities like Hive, Spark
+   sudo: True
+   hosts: hadoop-master-node
+   roles:
+     - { role: pig, when: "ansible_os_family == 'RedHat'" }
+     - { role: elasticsearch, when: "ansible_os_family == 'RedHat'" }
+     - { role: mysql, when: "ansible_os_family == 'RedHat'" }
+     - { role: hive, when: "ansible_os_family == 'RedHat'" }

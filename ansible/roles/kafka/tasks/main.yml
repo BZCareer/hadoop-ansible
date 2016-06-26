@@ -1,0 +1,39 @@
+---
+###################################################################################
+# Author: Zak Hassan
+# Description: Playbook Apache Kafka on openstack like less than 1 min. :)
+#
+###################################################################################
+# Creating kafka user
+- group: name=kafka state=present
+- user: name=kafka comment="kafka" group=kafka shell=/bin/bash
+
+
+- name: stat /tmp/kafka_2.11-0.9.0.1.tgz
+  stat: path=/tmp/kafka_2.11-0.9.0.1.tgz
+  register: kfbinary_stat
+
+- name: Downloading Apache Kafka
+  get_url: url=http://apachemirror.ovidiudan.com/kafka/0.9.0.1/kafka_2.11-0.9.0.1.tgz  dest=/tmp/kafka_2.11-0.9.0.1.tgz
+  when: kfbinary_stat.stat.exists == False
+
+- name: unzip tarball and place in /usr/local/
+  command: tar zxvf /tmp/kafka_2.11-0.9.0.1.tgz  -C /usr/local/
+
+- name: rename file
+  command: creates="{{ kafka_install_dir }}" mv /usr/local/kafka_2.11-0.9.0.1/  /usr/local/kafka
+
+- name: change permissions to kafka user for kafka_2.11-0.9.0.1
+  command: chown -R kafka:kafka  /usr/local/kafka
+
+- name: setup kafka property file
+  template: src=server.properties.j2 dest=/usr/local/kafka/config/server.properties
+
+- name: setup systemd unit file
+  template: src=kafka.systemd.j2 dest=/lib/systemd/system/kafka.service
+  register: install_config
+  notify: reload systemd
+
+- name: enable kafka
+  sudo: yes
+  service: name=kafka enabled=yes state=started

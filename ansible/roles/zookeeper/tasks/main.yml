@@ -1,0 +1,50 @@
+---
+###################################################################################
+#
+# Author: Zak Hassan
+# Description: Playbook Apache Zookeeper on Openstack like less than 1 min. :)
+#
+###################################################################################
+
+# Creating zookeeper user
+- group: name=zookeeper state=present
+- user: name=zookeeper comment="zookeeper" group=zookeeper shell=/bin/bash
+
+- name: stat /tmp/zookeeper-3.5.0-alpha.tar.gz
+  stat: path=/tmp/zookeeper-3.5.0-alpha.tar.gz
+  register: zkbinary_stat
+# Warning: If the mirror is down the just udpate the url below. And rerun.
+- name: Downloading Apache Zookeeper
+  get_url: url=http://apache.mirror.gtcomm.net/zookeeper/zookeeper-3.5.0-alpha/zookeeper-3.5.0-alpha.tar.gz  dest=/tmp/zookeeper-3.5.0-alpha.tar.gz
+  when: zkbinary_stat.stat.exists == False
+
+- name: change owners of file
+  command: chown zookeeper:zookeeper /tmp/zookeeper-3.5.0-alpha.tar.gz
+
+- name: unzip tarball and place in /usr/local/
+  command: tar zxf /tmp/zookeeper-3.5.0-alpha.tar.gz -C /usr/local/
+
+- name: stat /usr/local/zookeeper
+  stat: path=/usr/local/zookeeper
+  register: zk_dir_stat
+
+- name: rename file
+  command: creates="/usr/local/zookeeper" mv /usr/local/zookeeper-3.5.0-alpha/  /usr/local/zookeeper
+  when: zk_dir_stat.stat.exists == False
+
+- name: create logs directory
+  file: path=/usr/local/zookeeper/logs state=directory mode=0777 group=zookeeper owner=zookeeper
+
+- name: setup configuration file
+  template: src=zoo.cfg.j2 dest=/usr/local/zookeeper/conf/zoo.cfg
+
+- name: setup zk myid file
+  template: src=myid.j2 dest=/usr/local/zookeeper/logs/myid
+
+- name: setup systemd unit file
+  template: src=zookeeper-systemd.j2 dest=/lib/systemd/system/zookeeper.service
+  notify: reload systemd
+
+- name: enable zookeper
+  sudo: yes
+  service: name=zookeeper enabled=yes state=started

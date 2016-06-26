@@ -1,0 +1,41 @@
+[hadoop-master-node-third]
+192.168.33.38           ansible_connection=ssh   ansible_ssh_user=vagrant  api_hostname=hadoopmaster3 myid=3 ansible_ssh_private_key_file=/Users/vader/.vagrant.d/insecure_private_key
+
+[hadoop-master-node-second]
+192.168.33.39           ansible_connection=ssh   ansible_ssh_user=vagrant  api_hostname=hadoopmaster2 myid=2 ansible_ssh_private_key_file=/Users/vader/.vagrant.d/insecure_private_key
+
+
+
+[hadoop-master-node]
+192.168.33.40       server1=0.0.0.0 server2=192.168.33.41 server3=192.168.33.42      ansible_connection=ssh  ansible_ssh_user=vagrant  api_hostname=hadoopmaster myid=1 ansible_ssh_private_key_file=/Users/vader/.vagrant.d/insecure_private_key
+
+[hadoop-data1-node]
+192.168.33.41    server1=192.168.33.40 server2=0.0.0.0 server3=192.168.33.42         ansible_connection=ssh  ansible_ssh_user=vagrant myid=2  api_hostname=hadoopdata1  ansible_ssh_private_key_file=/Users/vader/.vagrant.d/insecure_private_key
+
+[hadoop-data2-node]
+192.168.33.42      server1=192.168.33.40 server2=192.168.33.41 server3=0.0.0.0        ansible_connection=ssh  ansible_ssh_user=vagrant myid=3  api_hostname=hadoopdata2   ansible_ssh_private_key_file=/Users/vader/.vagrant.d/insecure_private_key
+
+
+
+[hadoop-standard-nodes:children]
+hadoop-master-node
+hadoop-data1-node
+hadoop-data2-node
+
+
+[hadoop-master-namenodes:children]
+hadoop-master-node
+hadoop-master-node-second
+hadoop-master-node-third
+
+[hadoop-nodes:children]
+hadoop-data1-node
+hadoop-data2-node
+
+
+[all:vars]
+HOME=/home/vagrant
+download_zookeeper=False
+zk_urls=hadoopmaster:2181,hadoopdata1:2181,hadoopdata2:2181
+hadoop_gid=hadoop
+hadoop_uid=hadoop

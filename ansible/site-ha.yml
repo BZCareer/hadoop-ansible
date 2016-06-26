@@ -1,0 +1,28 @@
+---
+# Author: Zak Hassan
+# Usage: ansible-playbook site.yml or make install
+#
+# Description: Playbook created to demonstrate provisioning cloud environment in like less than 1 min. :)
+
+# Three servers will be name nodes 1 active, 1 standby and 1 backup
+# Will have a layer for messaging for integration with third party apps.
+
+- name: Configure Hadoop Namenodes with High Availability
+  sudo: True
+  hosts: hadoop-master-namenodes # This will be replaced with the name nodes
+     - { role: shared, when: "ansible_os_family == 'RedHat'" } # Base data
+     - { role: zookeeper, when: "ansible_os_family == 'RedHat'" }
+     - { role: kafka, when: "ansible_os_family == 'RedHat'" }
+     - { role: hadoop, when: "ansible_os_family == 'RedHat'" }
+     - { role: hive, when: "ansible_os_family == 'RedHat'" }
+     - { role: pig, when: "ansible_os_family == 'RedHat'" }
+     - { role: spark, when: "ansible_os_family == 'RedHat'" }
+
+# We will have 2 datanodes
+ - name: Configure Hadoop Data Nodes
+   sudo: True
+   hosts: hadoop-datanodes
+   roles:
+     - { role: shared, when: "ansible_os_family == 'RedHat'" }
+     - { role: hadoop, when: "ansible_os_family == 'RedHat'" }
+     - { role: spark, when: "ansible_os_family == 'RedHat'" }
