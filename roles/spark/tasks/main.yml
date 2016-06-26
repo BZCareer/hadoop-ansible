@@ -31,5 +31,5 @@
 - name: setup spark property files
   template: src={{ item.name }}.j2 dest=/usr/local/spark/conf/{{ item.name }} owner={{ hadoop_uid }} group={{ hadoop_gid }}
   with_items:
-    - { name: spark-default.conf }
+    - { name: spark-defaults.conf }
     - { name: spark-env.sh  }
