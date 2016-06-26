@@ -1,5 +1,4 @@
+#!/bin/bash
+# Author: Zak Hassan
 
-
-ssh-keygen -t rsa -b 4096 -C "changeme@example.com"
-
-
+ssh-keygen

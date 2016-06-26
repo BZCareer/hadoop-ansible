@@ -1,9 +1,0 @@
----
-# vars file for etcd
-etcd_binary: etcd-v2.0.9-linux-amd64.tar.gz
-etcd_install_dir: /usr/local/etcd
-etcd_prefix_dir: /usr/local
-etcd_version: etcd-v2.0.9-linux-amd64
-etcd_uid: centos
-etcd_gid: centos
-etcd_apache_mirror: https://github.com/coreos/etcd/releases/download/v2.0.9/etcd-v2.0.9-linux-amd64.tar.gz -o etcd-v2.0.9-linux-amd64.tar.gz
