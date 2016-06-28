@@ -14,7 +14,10 @@
 
 
 - name: uncompress pig tarball and place in /usr/local/
-  unarchive: src=/tmp/pig-0.15.0.tar.gz dest=/usr/local/ owner=hadoop group=hadoop
+  command: tar zxf /tmp/pig-0.15.0.tar.gz -C /usr/local/
 
 - name: rename file
   command: creates="/usr/local/pig" mv /usr/local/pig-0.15.0/  /usr/local/pig
+
+- name: uncompress pig tarball and place in /usr/local/
+  command: chown -R hadoop:hadoop /usr/local/pig

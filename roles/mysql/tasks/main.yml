@@ -25,7 +25,12 @@
     - mysql-connector-java
     - mysql-devel
     - python-devel
-    - python-pip
+
+- name: epel-release rpms
+  yum: name=epel-release state=present
+
+- name: python-pip rpms
+  yum: name=python-pip state=present
 
 # Make sure mysql service is running
 - name: enable mysql

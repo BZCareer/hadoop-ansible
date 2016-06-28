@@ -36,7 +36,7 @@
 - name: setup hosts file
   template: src=ssh.config.j2   dest=/home/hadoop/.ssh/config
 
-- name: rename file
+- name: change ownership file
   command: chown hadoop:hadoop /tmp/hadoop-2.7.1.tar.gz
 
 - authorized_key: user=hadoop key="{{ lookup('file', 'id_rsa.pub') }}"
@@ -45,8 +45,7 @@
   copy: src=id_rsa dest=/home/hadoop/.ssh group={{ hadoop_gid }}
 
 - name: Uncompress Apache Hadoop tarball and place in /usr/local/
-  unarchive: src=/tmp/hadoop-2.7.1.tar.gz dest=/usr/local/ owner=hadoop group=hadoop creates=/usr/local/hadoop-2.7.1
-
+  command: tar zxf /tmp/hadoop-2.7.1.tar.gz -C /usr/local/
 
 - name: stat {{ hadoop_install_dir }}
   stat: path={{ hadoop_install_dir }}
@@ -66,11 +65,13 @@
     - { name: hdfs-site.xml   }
     - { name: mapred-site.xml }
     - { name: yarn-site.xml   }
+  tags:
+    - hadoop_conf
 
 # TODO: Need to create http://docs.ansible.com/ansible/authorized_key_module.html
 # So hadoop can ssh into alternate servers using hadoop acount
 - lineinfile: dest=/home/hadoop/.bashrc regexp="HADOOP_HOME=" line="export HADOOP_HOME=/usr/local/hadoop"
-- lineinfile: dest=/home/hadoop/.bashrc regexp="JAVA_HOME=" line="export JAVA_HOME=/usr/lib/jvm/java-1.7.0"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="JAVA_HOME=" line="export JAVA_HOME=/usr/lib/jvm/java-1.8.0"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="HIVE_HOME=" line="export HIVE_HOME=/usr/local/hive"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="PIG_HOME=" line="export PIG_HOME=/usr/local/pig"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="STORM_HOME=" line="export STORM_HOME=/usr/local/storm"

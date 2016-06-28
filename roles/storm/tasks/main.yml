@@ -17,10 +17,13 @@
   command: chown hadoop:hadoop /tmp/apache-storm-1.0.1.tar.gz
 
 - name: Uncompress Apache Storm tarball and place in /usr/local/
-  unarchive: src=/tmp/apache-storm-1.0.1.tar.gz dest=/usr/local/ owner=hadoop group=hadoop creates=/usr/local/apache-storm-1.0.1
+  command: tar zxf /tmp/apache-storm-1.0.1.tar.gz -C /usr/local/
 
 - name: rename file
   command: mv /usr/local/apache-storm-1.0.1/  /usr/local/storm  creates=/usr/local/storm
+
+- name: change permissions so hadoop user can modify files in storm dir
+  command: chown -R hadoop:hadoop  /usr/local/storm
 
 - name: change permissions on storm configuration file
   file: path=/usr/local/storm/conf/storm.yaml owner=hadoop group=hadoop mode=0777

@@ -19,10 +19,13 @@
   command: chown hadoop:hadoop /tmp/spark-1.6.1-bin-hadoop2.6.tgz
 
 - name: uncompress spark tarball and place in /usr/local/
-  unarchive: src=/tmp/spark-1.6.1-bin-hadoop2.6.tgz dest=/usr/local/ owner=hadoop group=hadoop
+  command: tar -zxf /tmp/spark-1.6.1-bin-hadoop2.6.tgz   -C /usr/local/
 
 - name: rename file
   command: creates="/usr/local/spark" mv /usr/local/spark-1.6.1-bin-hadoop2.6/  /usr/local/spark
+
+- name: Change owner to hadoop for all files under SPARK_HOME
+  command: chown -R hadoop:hadoop  /usr/local/spark
 
 - name: copying spark slaves conf
   template: src=slaves.j2 dest=/usr/local/spark/conf/slaves owner={{ hadoop_uid }} group={{ hadoop_gid }}

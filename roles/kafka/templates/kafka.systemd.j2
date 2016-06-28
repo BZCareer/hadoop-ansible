@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=kafka
-Environment=JAVA_HOME=/usr/lib/jvm/java-1.7.0
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0
 ExecStart={{ kafka_install_dir }}/bin/kafka-server-start.sh {{ kafka_install_dir }}/config/server.properties
 ExecStop={{ kafka_install_dir }}/bin/kafka-server-stop.sh
 Restart=on-abort
