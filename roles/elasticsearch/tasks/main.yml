@@ -15,7 +15,10 @@
 
 
 - name: uncompress pig tarball and place in /usr/local/
-  unarchive: src=/tmp/elasticsearch-2.3.3.tar.gz dest=/usr/local/ owner=hadoop group=hadoop
+  command: tar zxf /tmp/elasticsearch-2.3.3.tar.gz -C /usr/local/
 
 - name: rename file
   command: creates="/usr/local/elasticsearch" mv /usr/local/elasticsearch-2.3.3  /usr/local/elasticsearch
+
+- name: change ownerships file
+  command: chown -R hadoop:hadoop  /usr/local/elasticsearch

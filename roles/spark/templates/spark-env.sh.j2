@@ -23,8 +23,7 @@
 
 SPARK_JAVA_OPTS=-Dspark.driver.port=53411
 HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
-SPARK_MASTER_IP=192.168.33.40
-
+SPARK_MASTER_IP={{ hadoopmaster }}
 
 # Options read when launching programs locally with
 # ./bin/run-example or ./bin/spark-submit

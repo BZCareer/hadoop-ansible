@@ -8,8 +8,8 @@
 # - name: install epel
 #   yum: name=epel-release state=latest
 
-- name: install  java7
-  yum: name=java-1.7.0-openjdk-devel.x86_64 state=latest
+- name: install  java8
+  yum: name=java-1.8.0-openjdk-devel.x86_64 state=latest
 
 # - name: install  zeromq
 #   yum: name=zeromq state=latest
