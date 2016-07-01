@@ -29,9 +29,19 @@ vagrant plugin install vagrant-env
 vagrant up
 ```
 
-## Screenshot of Cassandra 3 Node Cluster
+## Screenshots:
+
+* Apache Cassandra 3 Node Cluster
 ![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/Cassandra-3-NodeCluster.png)
 
-## License
+* Apache Hadoop 3 Node Cluster
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/Hadoop-DataNods.png)
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/HadoopYarn.png)			
 
+* Apache Spark 3 Node Cluster
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkJobs.png)
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkExecutors.png)
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkStandaloneConsole.png)
+
+## License
 Licensed under the Apache License, Version 2.0.
