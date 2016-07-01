@@ -1,0 +1,14 @@
+[Unit]
+Description=Cassandra Node Start Up
+After=network.target
+
+[Service]
+Type=forking
+User=hadoop
+Environment=CASSANDRA_HOME=/usr/local/cassandra JAVA_HOME=/usr/lib/jvm/java-1.8.0
+ExecStart=cassandra -f
+ExecStop=pgrep -u `whoami` -f cassandra | xargs kill -9
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

@@ -1,7 +1,7 @@
 ---
 # tasks file for cassandra
 # http://apache.mirror.vexxhost.com/cassandra/3.7/apache-cassandra-3.7-bin.tar.gz
-
+# pgrep -u `whoami` -f cassandra | xargs kill -9
 - name: stat /tmp/apache-cassandra-3.7-bin.tar.gz
   stat: path=/tmp/apache-cassandra-3.7-bin.tar.gz
   register: cassandra_binary_stat
@@ -25,3 +25,12 @@
 
 - name: setup cassandra.yaml file
   template: src=cassandra.yaml.j2 dest=/usr/local/cassandra/conf/cassandra.yaml
+
+
+- name: setup systemd unit file
+  template: src=cassandra.service.j2 dest=/lib/systemd/system/cassandra.service
+  notify: reload systemd
+
+- name: enable cassandra
+  sudo: yes
+  service: name=cassandra enabled=yes state=started
