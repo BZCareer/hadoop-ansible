@@ -30,7 +30,7 @@ vagrant up
 ```
 
 ## Screenshot of Cassandra 3 Node Cluster
-![alt tag](https://raw.githubusercontent.com/BZCareer/monitor.d/master/imgs/Cassandra-3-NodeCluster.png)
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/Cassandra-3-NodeCluster.png)
 
 ## License
 
