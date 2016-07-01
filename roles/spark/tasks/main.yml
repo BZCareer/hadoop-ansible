@@ -2,7 +2,7 @@
 # tasks file for spark
 # After installed go to http://hadoopmaster:4040/jobs/ to see the jobs executed
 # When Starting spark use the following format
-# spark-shell  --master  spark://hadoopmaster:7077 --jars /usr/local/spark/lib/mysql-connector-java.jar
+# spark-shell  --master  spark://hadoopmaster:7077 --jars /usr/local/hive/lib/mysql-connector-java.jar
 
 - name: stat /tmp/spark-1.6.1-bin-hadoop2.6.tgz
   stat: path=/tmp/spark-1.6.1-bin-hadoop2.6.tgz

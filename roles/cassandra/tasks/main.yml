@@ -1,0 +1,24 @@
+---
+# tasks file for cassandra
+# http://apache.mirror.vexxhost.com/cassandra/3.7/apache-cassandra-3.7-bin.tar.gz
+
+- name: stat /tmp/apache-cassandra-3.7-bin.tar.gz
+  stat: path=/tmp/apache-cassandra-3.7-bin.tar.gz
+  register: cassandra_binary_stat
+
+- name: Downloading Apache Pig
+  get_url: url=http://apache.mirror.vexxhost.com/cassandra/3.7/apache-cassandra-3.7-bin.tar.gz  dest=/tmp/apache-cassandra-3.7-bin.tar.gz
+  when: cassandra_binary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/apache-cassandra-3.7-bin.tar.gz
+
+
+- name: uncompress pig tarball and place in /usr/local/
+  command: tar zxf /tmp/apache-cassandra-3.7-bin.tar.gz -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/cassandra" mv /usr/local/apache-cassandra-3.7  /usr/local/cassandra
+
+- name: change ownerships file
+  command: chown -R hadoop:hadoop  /usr/local/cassandra
