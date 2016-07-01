@@ -1,2 +1,9 @@
 ---
 # handlers file for cassandra
+ - name: reload systemd
+   sudo: yes
+   command: systemctl {{ item }}
+   with_items:
+     - stop cassandra
+     - daemon-reload
+     - start cassandra
