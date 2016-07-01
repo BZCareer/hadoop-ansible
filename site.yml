@@ -20,6 +20,7 @@
      - { role: kafka, when: "ansible_os_family == 'RedHat'" }
      - { role: storm , when: "ansible_os_family == 'RedHat'" }
      - { role: spark, when: "ansible_os_family == 'RedHat'" }
+     - { role: cassandra, when: "ansible_os_family == 'RedHat'" }
 
  - name: Installing Big Data Utilities like Hive, Spark
    sudo: True

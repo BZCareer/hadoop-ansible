@@ -76,9 +76,10 @@
 - lineinfile: dest=/home/hadoop/.bashrc regexp="PIG_HOME=" line="export PIG_HOME=/usr/local/pig"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="STORM_HOME=" line="export STORM_HOME=/usr/local/storm"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="SPARK_HOME=" line="export SPARK_HOME=/usr/local/spark"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="CASSANDRA_HOME=" line="export CASSANDRA_HOME=/usr/local/cassandra"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="HADOOP_CONF_DIR=" line="export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
 
-- lineinfile: dest=/home/hadoop/.bashrc regexp="PATH=" line="export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin:$HIVE_HOME/bin:$PIG_HOME/bin:$STORM_HOME/bin:$SPARK_HOME/bin"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="PATH=" line="export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin:$HIVE_HOME/bin:$PIG_HOME/bin:$STORM_HOME/bin:$SPARK_HOME/bin:$CASSANDRA_HOME/bin"
 
 
 # - name: need to init env variables
