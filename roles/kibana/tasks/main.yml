@@ -1,0 +1,22 @@
+---
+# tasks file for kibana
+# https://download.elastic.co/kibana/kibana/kibana-4.5.1-linux-x64.tar.gz
+# open localhost:5601
+
+
+- name: stat /tmp/kibana-4.5.1-linux-x64.tar.gz
+  stat: path=/tmp/kibana-4.5.1-linux-x64.tar.gz
+  register: kibana_binary_stat
+
+- name: Downloading Elastic Search For Hadoop
+  get_url: url=https://download.elastic.co/kibana/kibana/kibana-4.5.1-linux-x64.tar.gz  dest=/tmp/kibana-4.5.1-linux-x64.tar.gz
+  when: kibana_binary_stat.stat.exists == False
+
+- name: uncompress pig tarball and place in /usr/local/
+  command: tar zxf /tmp/kibana-4.5.1-linux-x64.tar.gz  -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/kibana" mv /usr/local/kibana-4.5.1-linux-x64  /usr/local/kibana
+
+- name: change ownerships file
+  command: chown -R hadoop:hadoop  /usr/local/kibana

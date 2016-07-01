@@ -2,23 +2,19 @@
 # tasks file for elasticsearch
 #https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.3/elasticsearch-2.3.3.tar.gz
 
-- name: stat /tmp/elasticsearch-2.3.3.tar.gz
-  stat: path=/tmp/elasticsearch-2.3.3.tar.gz
+- name: stat /tmp/elasticsearch-hadoop-2.3.2.zip
+  stat: path=/tmp/elasticsearch-hadoop-2.3.2.zip
   register: elastic_binary_stat
 
-- name: Downloading Apache Pig
-  get_url: url=https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.3/elasticsearch-2.3.3.tar.gz  dest=/tmp/elasticsearch-2.3.3.tar.gz
+- name: Downloading Elastic Search For Hadoop
+  get_url: url=http://download.elastic.co/hadoop/elasticsearch-hadoop-2.3.2.zip  dest=/tmp/elasticsearch-hadoop-2.3.2.zip
   when: elastic_binary_stat.stat.exists == False
 
-- name: rename file
-  command: chown hadoop:hadoop /tmp/elasticsearch-2.3.3.tar.gz
-
-
-- name: uncompress pig tarball and place in /usr/local/
-  command: tar zxf /tmp/elasticsearch-2.3.3.tar.gz -C /usr/local/
+- name: uncompress file tarball and place in /usr/local/
+  command: unzip elasticsearch-hadoop-2.3.2.zip -d /usr/local/
 
 - name: rename file
-  command: creates="/usr/local/elasticsearch" mv /usr/local/elasticsearch-2.3.3  /usr/local/elasticsearch
+  command: creates="/usr/local/elasticsearch" mv /usr/local/elasticsearch-hadoop-2.3.2  /usr/local/elasticsearch
 
 - name: change ownerships file
   command: chown -R hadoop:hadoop  /usr/local/elasticsearch
