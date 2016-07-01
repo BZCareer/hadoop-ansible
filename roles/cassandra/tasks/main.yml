@@ -22,3 +22,6 @@
 
 - name: change ownerships file
   command: chown -R hadoop:hadoop  /usr/local/cassandra
+
+- name: setup cassandra.yaml file
+  template: src=cassandra.yaml.j2 dest=/usr/local/cassandra/conf/cassandra.yaml

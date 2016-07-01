@@ -1,16 +1,26 @@
+
+
 # Hadoop Ansible
-This ansible playbook contains roles for the following technologies: 
-* Apache Hadoop
-* Apache Spark
-* Apache Storm
-* Apache Zookeeper
-* Apache Kafka
-* Apache Pig
-* Apache Hive
-* ElasticSearch
 
-Note: This ansible module is not ready yet and is still in development. 
+This ansible playbook contains roles for the following technologies:
 
+* Apache Hadoop v2.7.1
+* Apache Spark v1.6.1
+* Apache Storm v1.0.1
+* Apache Zookeeper v3.5.0
+* Apache Kafka v2.11-0.9.0.1
+* Apache Pig v0.15.0
+* Apache Hive v2.0.0
+* ElasticSearch v2.3.3
+* Cassandra v3.7
+
+Note: This ansible module is not ready yet and is still in development.
+
+## Prerequisite:
+
+Hadoop will require creation of public key private key pair. Create your public id_rsa.pub, id_rsa and place it in this folder:
+
+`/roles/hadoop/files/`
 
 
 ## Vagrant
@@ -18,14 +28,6 @@ Note: This ansible module is not ready yet and is still in development.
 vagrant plugin install vagrant-env
 vagrant up
 ```
-## Openstack
-
-Need to test ansible provisioning and I'll update this section with results
-
-## EC2
-
-Need to test ansible provisioning and I'll update this section with results
-
 
 
 ## License
