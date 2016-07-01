@@ -45,6 +45,8 @@ vagrant up
 
 ## Video Demo:
 
+Click on image below to see video demonstration:
+
 [![ScreenShot](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/VideoDemoScreenshot.png)](https://vimeo.com/170316038)
 
 
