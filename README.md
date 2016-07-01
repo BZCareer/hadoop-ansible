@@ -43,5 +43,11 @@ vagrant up
 ![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkExecutors.png)
 ![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkStandaloneConsole.png)
 
+## Video Demo:
+
+[![ScreenShot](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/VideoDemoScreenshot.png)](https://vimeo.com/170316038)
+
+
+
 ## License
 Licensed under the Apache License, Version 2.0.
