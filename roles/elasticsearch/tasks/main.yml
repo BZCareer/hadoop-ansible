@@ -11,7 +11,7 @@
   when: elastic_binary_stat.stat.exists == False
 
 - name: uncompress file tarball and place in /usr/local/
-  command: unzip elasticsearch-hadoop-2.3.2.zip -d /usr/local/
+  command: unzip /tmp/elasticsearch-hadoop-2.3.2.zip -d /usr/local/
 
 - name: rename file
   command: creates="/usr/local/elasticsearch" mv /usr/local/elasticsearch-hadoop-2.3.2  /usr/local/elasticsearch
