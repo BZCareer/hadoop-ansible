@@ -11,6 +11,9 @@
 - name: install  java8
   yum: name=java-1.8.0-openjdk-devel.x86_64 state=latest
 
+- name: install  java8
+  yum: name=unzip state=latest
+
 # - name: install  zeromq
 #   yum: name=zeromq state=latest
 
