@@ -35,7 +35,6 @@ hadoop-data2-node
 
 [all:vars]
 HOME=/home/vagrant
-download_zookeeper=False
 zk_urls=hadoopmaster:2181,hadoopdata1:2181,hadoopdata2:2181
 hadoop_gid=hadoop
 hadoop_uid=hadoop

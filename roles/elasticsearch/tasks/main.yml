@@ -7,11 +7,11 @@
   register: elastic_binary_stat
 
 - name: Downloading Elastic Search For Hadoop
-  get_url: url=http://download.elastic.co/hadoop/elasticsearch-hadoop-2.3.2.zip  dest=/tmp/elasticsearch-hadoop-2.3.2.zip
+  get_url: creates="/tmp/elasticsearch-hadoop-2.3.2.zip" url=http://download.elastic.co/hadoop/elasticsearch-hadoop-2.3.2.zip  dest=/tmp/elasticsearch-hadoop-2.3.2.zip
   when: elastic_binary_stat.stat.exists == False
 
 - name: uncompress file tarball and place in /usr/local/
-  command: unzip /tmp/elasticsearch-hadoop-2.3.2.zip -d /usr/local/
+  command: creates="/usr/local/elasticsearch-hadoop-2.3.2" unzip /tmp/elasticsearch-hadoop-2.3.2.zip -d /usr/local/
 
 - name: rename file
   command: creates="/usr/local/elasticsearch" mv /usr/local/elasticsearch-hadoop-2.3.2  /usr/local/elasticsearch
