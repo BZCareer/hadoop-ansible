@@ -1,0 +1,20 @@
+---
+# tasks file for logstash
+# https://download.elastic.co/logstash/logstash/logstash-2.3.3.tar.gz
+
+- name: stat /tmp/logstash-2.3.3.tar.gz
+  stat: path=/tmp/logstash-2.3.3.tar.gz
+  register: logstash_binary_stat
+
+- name: Downloading file tarball
+  get_url: url=https://download.elastic.co/logstash/logstash/logstash-2.3.3.tar.gz  dest=/tmp/logstash-2.3.3.tar.gz
+  when: logstash_binary_stat.stat.exists == False
+
+- name: uncompress file tarball and place in /usr/local/
+  command: tar zxf /tmp/logstash-2.3.3.tar.gz  -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/logstash" mv /usr/local/logstash-2.3.3  /usr/local/logstash
+
+- name: change ownerships file
+  command: chown -R hadoop:hadoop  /usr/local/logstash
