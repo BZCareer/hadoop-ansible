@@ -29,6 +29,8 @@ vagrant plugin install vagrant-env
 vagrant up
 ```
 
+## Screenshot of Cassandra 3 Node Cluster
+![alt tag](https://raw.githubusercontent.com/BZCareer/monitor.d/master/imgs/Cassandra-3-NodeCluster.png)
 
 ## License
 
