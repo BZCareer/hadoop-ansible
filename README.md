@@ -30,6 +30,7 @@ zk_urls=hadoopmaster:2181,hadoopdata1:2181,hadoopdata2:2181
 hadoop_gid=hadoop
 hadoop_uid=hadoop
 hadoopmaster=192.168.33.40
+cassandra_seeds=hadoopmaster,hadoopdata1,hadoopdata2
 
 # For selecting which modules to install. To enable set each variable below to true. To disable set to false
 install_zookeeper=true
