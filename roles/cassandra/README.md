@@ -1,8 +1,7 @@
-Role Name
+Cassandra
 =========
 
-A brief description of the role goes here.
-
+This role was designed to provide a way to provision a cluster of cassandra.
 Requirements
 ------------
 
