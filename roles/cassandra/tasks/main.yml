@@ -2,6 +2,13 @@
 # tasks file for cassandra
 # http://apache.mirror.vexxhost.com/cassandra/3.7/apache-cassandra-3.7-bin.tar.gz
 # pgrep -u `whoami` -f cassandra | xargs kill -9
+#
+# For JMX Remote Monitoring
+#
+# service:jmx:rmi://0.0.0.0/jndi/rmi://0.0.0.0:7199/jmxrmi
+#  creds = {"monitorRole", "mrpasswd"};
+# java -jar jmxterm-1.0-alpha-4-uber.jar -l service:jmx:rmi://0.0.0.0/jndi/rmi://0.0.0.0:7199/jmxrmi -u monitorRole -p mrpasswd
+
 - name: stat /tmp/apache-cassandra-3.7-bin.tar.gz
   stat: path=/tmp/apache-cassandra-3.7-bin.tar.gz
   register: cassandra_binary_stat
@@ -29,7 +36,6 @@
 - name: setup cassandra-env.sh file
   template: src=cassandra-env.sh.j2 dest=/usr/local/cassandra/conf/cassandra-env.sh
 
-# For JMX Remote Monitoring
 - name: setup jmxremote.access file
   template: src=jmxremote.access.j2 dest=/usr/local/cassandra/conf/jmxremote.access
 
