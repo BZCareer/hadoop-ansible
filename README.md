@@ -2,7 +2,7 @@
 
 # Hadoop Ansible
 
-This ansible playbook contains roles for the following technologies:
+This Ansible playbook contains roles for the following technologies:
 
 * Apache Hadoop v2.7.1
 * Apache Spark v1.6.1
@@ -11,8 +11,11 @@ This ansible playbook contains roles for the following technologies:
 * Apache Kafka v2.11-0.9.0.1
 * Apache Pig v0.15.0
 * Apache Hive v2.0.0
+* Apache Cassandra v3.7
 * ElasticSearch v2.3.3
-* Cassandra v3.7
+* Logstash v2.3.3
+* Kibana v4.5.1
+* JBoss Wildfly v10.0
 
 Note: This ansible module is not ready yet and is still in development.
 
@@ -45,6 +48,7 @@ install_logstash=true
 install_pig=true
 install_mysql=true
 install_hive=true
+install_wildfly=true
 ```
 
 ## Prerequisite:

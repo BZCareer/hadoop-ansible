@@ -55,3 +55,4 @@ install_logstash=true
 install_pig=true
 install_mysql=true
 install_hive=true
+install_wildfly=true

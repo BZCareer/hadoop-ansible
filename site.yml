@@ -32,3 +32,4 @@
      - { role: pig, when: ansible_os_family == "RedHat" and install_pig is defined and install_pig == "true"  }
      - { role: mysql, when: ansible_os_family == "RedHat" and install_mysql is defined and install_mysql == "true"  }
      - { role: hive, when: ansible_os_family == "RedHat" and install_hive is defined and install_hive == "true"  }
+     - { role: wildfly, when: ansible_os_family == "RedHat" and install_wildfly is defined and install_wildfly == "true"  }

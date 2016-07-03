@@ -1,0 +1,21 @@
+  input {
+    log4j {
+      mode => "server"
+      host => "0.0.0.0"
+      port => 4712
+      type => "log4j"
+    }
+  }
+
+  output {
+
+    kafka {
+        topic_id => "logtest"
+  	bootstrap_servers => "hadoopmaster:9092,hadoopdata1:9092,hadoopdata2:9092"
+    }
+    elasticsearch {
+        hosts => ["127.0.0.1"]
+        index => "logstash-%{+YYYY.MM.dd}"
+    }
+    stdout { codec => rubydebug }
+  }
