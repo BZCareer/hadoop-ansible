@@ -15,20 +15,20 @@
      - hadoop-data2-node
    roles:
      - { role: shared, when:  ansible_os_family == "RedHat" }
-     - { role: zookeeper, when:  ansible_os_family == "RedHat" and install_zookeeper is defined and install_zookeeper == true  }
-     - { role: hadoop, when:  ansible_os_family == "RedHat" and install_hadoop is defined and install_hadoop == true  }
-     - { role: kafka, when:  ansible_os_family == "RedHat" and install_kafka is defined and install_kafka == true  }
-     - { role: storm , when:  ansible_os_family == "RedHat" and install_storm is defined and install_storm == true  }
-     - { role: spark, when:  ansible_os_family == "RedHat" and install_spark is defined and install_spark == true }
-     - { role: cassandra, when:  ansible_os_family == "RedHat" and install_cassandra is defined and install_cassandra == true  }
+     - { role: zookeeper, when:  ansible_os_family == "RedHat" and install_zookeeper is defined and install_zookeeper == "true"  }
+     - { role: hadoop, when:  ansible_os_family == "RedHat" and install_hadoop is defined and install_hadoop == "true"  }
+     - { role: kafka, when:  ansible_os_family == "RedHat" and install_kafka is defined and install_kafka == "true"  }
+     - { role: storm , when:  ansible_os_family == "RedHat" and install_storm is defined and install_storm == "true"  }
+     - { role: spark, when:  ansible_os_family == "RedHat" and install_spark is defined and install_spark == "true" }
+     - { role: cassandra, when:  ansible_os_family == "RedHat" and install_cassandra is defined and install_cassandra == "true"  }
 
  - name: Installing Big Data Utilities like Hive, Spark
    sudo: True
    hosts: hadoop-master-node
    roles:
-     - { role: elasticsearch, when: ansible_os_family == "RedHat" and  install_elasticsearch is defined and install_elasticsearch == true }
-     - { role: kibana, when: ansible_os_family == "RedHat" and  install_kibana is defined and install_kibana == true }
-     - { role: logstash, when: ansible_os_family == "RedHat" and install_logstash is defined and install_logstash == true }
-     - { role: pig, when: ansible_os_family == "RedHat" and install_pig is defined and install_pig == true  }
-     - { role: mysql, when: ansible_os_family == "RedHat" and install_mysql is defined and install_mysql == true  }
-     - { role: hive, when: ansible_os_family == "RedHat" and install_hive is defined and install_hive == true  }
+     - { role: elasticsearch, when: ansible_os_family == "RedHat" and  install_elasticsearch is defined and install_elasticsearch == "true" }
+     - { role: kibana, when: ansible_os_family == "RedHat" and  install_kibana is defined and install_kibana == "true" }
+     - { role: logstash, when: ansible_os_family == "RedHat" and install_logstash is defined and install_logstash == "true" }
+     - { role: pig, when: ansible_os_family == "RedHat" and install_pig is defined and install_pig == "true"  }
+     - { role: mysql, when: ansible_os_family == "RedHat" and install_mysql is defined and install_mysql == "true"  }
+     - { role: hive, when: ansible_os_family == "RedHat" and install_hive is defined and install_hive == "true"  }
