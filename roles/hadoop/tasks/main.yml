@@ -70,6 +70,7 @@
 
 # TODO: Need to create http://docs.ansible.com/ansible/authorized_key_module.html
 # So hadoop can ssh into alternate servers using hadoop acount
+# TODO: Add when condition to these lineline file changes so if Hive isn't installed don't need to set its env var.
 - lineinfile: dest=/home/hadoop/.bashrc regexp="HADOOP_HOME=" line="export HADOOP_HOME=/usr/local/hadoop"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="JAVA_HOME=" line="export JAVA_HOME=/usr/lib/jvm/java-1.8.0"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="HIVE_HOME=" line="export HIVE_HOME=/usr/local/hive"
@@ -77,9 +78,11 @@
 - lineinfile: dest=/home/hadoop/.bashrc regexp="STORM_HOME=" line="export STORM_HOME=/usr/local/storm"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="SPARK_HOME=" line="export SPARK_HOME=/usr/local/spark"
 - lineinfile: dest=/home/hadoop/.bashrc regexp="CASSANDRA_HOME=" line="export CASSANDRA_HOME=/usr/local/cassandra"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="JBOSS_HOME=" line="export JBOSS_HOME=/usr/local/wildfly"
+
 - lineinfile: dest=/home/hadoop/.bashrc regexp="HADOOP_CONF_DIR=" line="export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
 
-- lineinfile: dest=/home/hadoop/.bashrc regexp="PATH=" line="export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin:$HIVE_HOME/bin:$PIG_HOME/bin:$STORM_HOME/bin:$SPARK_HOME/bin:$CASSANDRA_HOME/bin"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="PATH=" line="export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin:$HIVE_HOME/bin:$PIG_HOME/bin:$STORM_HOME/bin:$SPARK_HOME/bin:$CASSANDRA_HOME/bin:$JBOSS_HOME/bin"
 
 
 # - name: need to init env variables

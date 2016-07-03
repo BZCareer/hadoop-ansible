@@ -18,3 +18,9 @@
 
 - name: change ownerships file
   command: chown -R hadoop:hadoop  /usr/local/logstash
+
+- name: setup Procfile file
+  template: src=Procfile.j2 dest=/usr/local/logstash/Procfile
+
+- name: setup log4j-kakfa-processor.conf file
+  template: src=log4j-kakfa-processor.conf.j2 dest=/usr/local/logstash/log4j-kakfa-processor.conf

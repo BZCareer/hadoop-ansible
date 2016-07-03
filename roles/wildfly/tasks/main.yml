@@ -1,0 +1,23 @@
+---
+# tasks file for wildfly
+# http://download.jboss.org/wildfly/10.0.0.Final/wildfly-10.0.0.Final.tar.gz
+# $JBOSS_HOME/bin/standalone.sh -Djboss.socket.binding.port-offset=10000
+- name: stat /tmp/wildfly-10.0.0.Final.tar.gz
+  stat: path=/tmp/wildfly-10.0.0.Final.tar.gz
+  register: wildfly_binary_stat
+
+- name: Downloading wildfly
+  get_url: url=http://download.jboss.org/wildfly/10.0.0.Final/wildfly-10.0.0.Final.tar.gz  dest=/tmp/wildfly-10.0.0.Final.tar.gz
+  when: wildfly_binary_stat.stat.exists == False
+
+- name: uncompress file tarball and place in /usr/local/
+  command: creates="/usr/local/wildfly-10.0.0.Final"  tar zxf /tmp/wildfly-10.0.0.Final.tar.gz -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/wildfly" mv /usr/local/wildfly-10.0.0.Final  /usr/local/wildfly
+
+- name: change ownerships file
+  command: chown -R hadoop:hadoop  /usr/local/wildfly
+
+- name: setup standalone.xml file
+  template: src=standalone.xml.j2 dest=/usr/local/wildfly/standalone/configuration/standalone.xml
