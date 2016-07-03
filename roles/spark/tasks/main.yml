@@ -36,3 +36,4 @@
   with_items:
     - { name: spark-defaults.conf }
     - { name: spark-env.sh  }
+    - { name: metrics.properties  }
