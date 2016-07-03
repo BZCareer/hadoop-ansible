@@ -522,13 +522,13 @@ ssl_storage_port: 7001
 # you can specify which should be chosen using listen_interface_prefer_ipv6. If false the first ipv4
 # address will be used. If true the first ipv6 address will be used. Defaults to false preferring
 # ipv4. If there is only one address it will be selected regardless of ipv4/ipv6.
-listen_address: {{ ansible_eth0["ipv4"]["address"] }}
+listen_address: {{ ansible_enp0s8.ipv4.address }}
 # listen_interface: eth0
 # listen_interface_prefer_ipv6: false
 
 # Address to broadcast to other Cassandra nodes
 # Leaving this blank will set it to the same value as listen_address
-broadcast_address: {{ ansible_eth0["ipv4"]["address"] }}
+broadcast_address: {{ ansible_enp0s8.ipv4.address }}
 
 # When using multiple physical network interfaces, set this
 # to true to listen on broadcast_address in addition to
@@ -608,7 +608,7 @@ rpc_port: 9160
 # be set to 0.0.0.0. If left blank, this will be set to the value of
 # rpc_address. If rpc_address is set to 0.0.0.0, broadcast_rpc_address must
 # be set.
-broadcast_rpc_address: {{ ansible_eth0["ipv4"]["address"] }}
+broadcast_rpc_address: {{ ansible_enp0s8.ipv4.address }}
 
 # enable or disable keepalive on rpc/native connections
 rpc_keepalive: true
