@@ -364,6 +364,7 @@
                 <http-listener name="default" socket-binding="http" redirect-socket="https"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
+                    <access-log prefix="my_access"  pattern="{ 'method':'%m','ip_address':'%a','timestamp':'%t', 'referrer':'%{i,Referer}', 'user_agent':'%{i,User-Agent}', 'protocol':'%H', 'access_port':'%p', 'uri': '%U', 'http_code':'%s', 'time_taken':'%T','session_id':'%S' }" use-server-log="true" />
                     <filter-ref name="server-header"/>
                     <filter-ref name="x-powered-by-header"/>
                 </host>
