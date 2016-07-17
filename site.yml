@@ -22,7 +22,7 @@
      - { role: spark, when:  ansible_os_family == "RedHat" and install_spark is defined and install_spark == "true" }
      - { role: cassandra, when:  ansible_os_family == "RedHat" and install_cassandra is defined and install_cassandra == "true"  }
 
- - name: Installing Big Data Utilities like Hive, Spark
+ - name: Installing Big Data Utilities Hive, Spark, Zeppelin, Pig, Logstash, ElasticSearch, etc.
    sudo: True
    hosts: hadoop-master-node
    roles:
@@ -33,3 +33,4 @@
      - { role: mysql, when: ansible_os_family == "RedHat" and install_mysql is defined and install_mysql == "true"  }
      - { role: hive, when: ansible_os_family == "RedHat" and install_hive is defined and install_hive == "true"  }
      - { role: wildfly, when: ansible_os_family == "RedHat" and install_wildfly is defined and install_wildfly == "true"  }
+     - { role: zeppelin, when: ansible_os_family == "RedHat" and install_zeppelin is defined and install_zeppelin == "true"  }
