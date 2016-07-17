@@ -1,0 +1,24 @@
+---
+# tasks file for zeppelin
+
+
+- name: stat /tmp/zeppelin-0.6.0-bin-netinst.tgz
+  stat: path=/tmp/zeppelin-0.6.0-bin-netinst.tgz
+  register: zepbinary_stat
+
+- name: Downloading Apache Pig
+  get_url: url=http://mirror.csclub.uwaterloo.ca/apache/zeppelin/zeppelin-0.6.0/zeppelin-0.6.0-bin-netinst.tgz  dest=/tmp/zeppelin-0.6.0-bin-netinst.tgz
+  when: zepbinary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/zeppelin-0.6.0-bin-netinst.tgz
+
+
+- name: uncompress file tarball and place in /usr/local/
+  command: tar zxf /tmp/zeppelin-0.6.0-bin-netinst.tgz -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/zeppelin" mv /usr/local/zeppelin-0.6.0-bin-netinst/  /usr/local/zeppelin
+
+- name: uncompress zeppelin tarball and place in /usr/local/
+  command: chown -R hadoop:hadoop /usr/local/zeppelin

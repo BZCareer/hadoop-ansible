@@ -16,10 +16,11 @@ This Ansible playbook contains roles for the following technologies:
 * Logstash v2.3.3
 * Kibana v4.5.1
 * JBoss Wildfly v10.0
+* Apache Zeppelin v0.6.0
 
 Note: This ansible module is not ready yet and is still in development.
 
-## Ansible Variables:
+## Ansible Variables
 
 If you would like to select which roles you would like to use in this playbook, I've exposed variables for each module `install_$role` so you can include the ones you want and not include others. See below example of inventory.yml variables:
 
@@ -49,6 +50,7 @@ install_pig=true
 install_mysql=true
 install_hive=true
 install_wildfly=true
+install_zeppelin=true
 ```
 
 ## Prerequisite:
