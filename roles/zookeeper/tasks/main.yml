@@ -19,7 +19,7 @@
   when: zkbinary_stat.stat.exists == False
 
 - name: change owners of file
-  command: chown zookeeper:zookeeper /tmp/zookeeper-3.5.0-alpha.tar.gz
+  command: chown hadoop:hadoop /tmp/zookeeper-3.5.0-alpha.tar.gz
 
 - name: unzip tarball and place in /usr/local/
   command: tar zxf /tmp/zookeeper-3.5.0-alpha.tar.gz -C /usr/local/
@@ -33,13 +33,17 @@
   when: zk_dir_stat.stat.exists == False
 
 - name: create logs directory
-  file: path=/usr/local/zookeeper/logs state=directory mode=0777 group=zookeeper owner=zookeeper
+  file: path=/usr/local/zookeeper/logs state=directory mode=0777 group=hadoop owner=hadoop
 
 - name: setup configuration file
   template: src=zoo.cfg.j2 dest=/usr/local/zookeeper/conf/zoo.cfg
 
 - name: setup zk myid file
   template: src=myid.j2 dest=/usr/local/zookeeper/logs/myid
+
+
+- name: set permissions for installation placed in /usr/local/
+  command: chown -R hadoop:hadoop /usr/local/zookeeper
 
 - name: setup systemd unit file
   template: src=zookeeper-systemd.j2 dest=/lib/systemd/system/zookeeper.service

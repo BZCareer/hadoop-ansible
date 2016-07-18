@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+   <property>
+       <name>hbase.rootdir</name>
+       <value>hdfs://hadoopmaster:8020/hbase</value>
+   </property>
+   <property>
+      <name>hbase.cluster.distributed</name>
+      <value>true</value>
+   </property>
+   <property>
+      <name>dfs.replication</name>
+      <value>1</value>
+   </property>
+   <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>hadoopmaster,hadoopdata1,hadoopdata2</value>
+  </property>
+</configuration>

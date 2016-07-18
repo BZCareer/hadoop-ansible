@@ -51,6 +51,7 @@ install_mysql=true
 install_hive=true
 install_wildfly=true
 install_zeppelin=true
+install_hbase=true
 ```
 
 ## Prerequisite:
