@@ -1,0 +1,35 @@
+---
+# tasks file for flink $FLINK_HOME/bin/start-cluster.sh
+# http://apache.mirror.gtcomm.net/flink/flink-1.0.3/flink-1.0.3-bin-hadoop2-scala_2.10.tgz
+
+
+- name: stat /tmp/flink-1.0.3-bin-hadoop2-scala_2.10.tgz
+  stat: path=/tmp/flink-1.0.3-bin-hadoop2-scala_2.10.tgz
+  register: flink_binary_stat
+
+- name: Downloading from mirror
+  get_url: url=http://apache.mirror.gtcomm.net/flink/flink-1.0.3/flink-1.0.3-bin-hadoop2-scala_2.10.tgz  dest=/tmp/flink-1.0.3-bin-hadoop2-scala_2.10.tgz
+  when: flink_binary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/flink-1.0.3-bin-hadoop2-scala_2.10.tgz
+
+- name: uncompress file tarball and place in /usr/local/
+  command: tar zxf /tmp/flink-1.0.3-bin-hadoop2-scala_2.10.tgz  -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/flink" mv /usr/local/flink-1.0.3/  /usr/local/flink
+
+- name: set permissions for installation placed in /usr/local/
+  command: chown -R hadoop:hadoop /usr/local/flink
+
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HBASE_HOME=" line="export HBASE_HOME=/usr/local/hbase"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="FLINK_HOME=" line="export FLINK_HOME=/usr/local/flink"
+
+
+- name: setup configuration files
+  template: src={{ item.name }}.j2
+        dest=/usr/local/flink/conf/{{ item.name }}
+  with_items:
+    - { name: flink-conf.yaml  }
+    - { name: slaves   }

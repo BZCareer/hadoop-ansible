@@ -1,5 +1,5 @@
 ---
-# tasks file for hbase
+# tasks file for hbase # $HBASE_HOME/bin/start-hbase.sh && $HBASE_HOME/bin/hbase.sh shell 
 
 
 - name: stat /tmp/hbase-1.2.2-bin.tar.gz
