@@ -21,6 +21,7 @@
      - { role: storm , when:  ansible_os_family == "RedHat" and install_storm is defined and install_storm == "true"  }
      - { role: spark, when:  ansible_os_family == "RedHat" and install_spark is defined and install_spark == "true" }
      - { role: cassandra, when:  ansible_os_family == "RedHat" and install_cassandra is defined and install_cassandra == "true"  }
+     - { role: hbase, when:  ansible_os_family == "RedHat" and install_hbase is defined and install_hbase == "true"  }
 
  - name: Installing Big Data Utilities Hive, Spark, Zeppelin, Pig, Logstash, ElasticSearch, etc.
    sudo: True

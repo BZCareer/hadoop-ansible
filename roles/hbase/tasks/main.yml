@@ -1,0 +1,44 @@
+---
+# tasks file for hbase
+
+
+- name: stat /tmp/hbase-1.2.2-bin.tar.gz
+  stat: path=/tmp/hbase-1.2.2-bin.tar.gz
+  register: hbase_binary_stat
+
+- name: Downloading Apache Hbase
+  get_url: url=http://apache.mirror.vexxhost.com/hbase/1.2.2/hbase-1.2.2-bin.tar.gz  dest=/tmp/hbase-1.2.2-bin.tar.gz
+  when: hbase_binary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/hbase-1.2.2-bin.tar.gz
+
+- name: uncompress file tarball and place in /usr/local/
+  command: tar zxf /tmp/hbase-1.2.2-bin.tar.gz  -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/hbase" mv /usr/local/hbase-1.2.2/  /usr/local/hbase
+
+- name: set permissions for installation placed in /usr/local/
+  command: chown -R hadoop:hadoop /usr/local/hbase
+
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HBASE_HOME=" line="export HBASE_HOME=/usr/local/hbase"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HBASE_REGIONSERVERS=" line="export HBASE_REGIONSERVERS=/usr/local/hbase/conf/regionservers"
+- lineinfile: dest=/home/hadoop/.bashrc regexp="HBASE_MANAGES_ZK=" line="export HBASE_MANAGES_ZK=true"
+
+# copy template files to $HBASE_HOME/conf/*
+
+- name: setup core-site.xml file
+  template: src={{ item.name }}.j2
+        dest=/usr/local/hbase/conf/{{ item.name }}
+  with_items:
+    - { name: hbase-site.xml   }
+    - { name: regionservers   }
+    - { name: backup-masters }
+  tags:
+    - hbase_conf
+
+- name: set permissions for installation placed in /usr/local/
+  command: cp /usr/local/hadoop/etc/hadoop/{{ item.name }}  /usr/local/hbase/conf/
+  with_items:
+    - { name: hdfs-site.xml   }
