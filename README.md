@@ -17,6 +17,7 @@ This Ansible playbook contains roles for the following technologies:
 * Kibana v4.5.1
 * JBoss Wildfly v10.0
 * Apache Zeppelin v0.6.0
+* Apache Flink v1.0.3
 
 Note: This ansible module is not ready yet and is still in development.
 
@@ -52,6 +53,7 @@ install_hive=true
 install_wildfly=true
 install_zeppelin=true
 install_hbase=true
+install_flink=true
 ```
 
 ## Prerequisite:
@@ -80,6 +82,9 @@ vagrant up
 ![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkJobs.png)
 ![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkExecutors.png)
 ![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/SparkStandaloneConsole.png)
+
+* Apache Flink 3 Node Cluster
+![alt tag](https://raw.githubusercontent.com/BZCareer/hadoop-ansible/master/imgs/Flink_Screenshot.png)
 
 ## Video Demo:
 
