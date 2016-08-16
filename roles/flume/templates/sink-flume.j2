@@ -1,0 +1,11 @@
+agent.sinks.hdfs.type=hdfs
+# Very important, *DO NOT* use CompressedStream. Avro itself will do the compression
+agent.sinks.hdfs.hdfs.fileType=DataStream
+# *MUST* be set to .avro for Hive to work
+agent.sinks.hdfs.hdfs.fileSuffix=.avro
+# Of course choose your own path
+agent.sinks.hdfs.hdfs.path=hdfs://hadoopmaster/customer/datain/key=%{some_partition}
+agent.sinks.hdfs.hdfs.writeFormat=Text
+# The magic happens here:
+agent.sinks.hdfs.serializer=avro_event
+agent.sinks.hdfs.serializer.compressionCodec=snappy

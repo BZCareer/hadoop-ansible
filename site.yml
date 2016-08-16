@@ -14,7 +14,7 @@
      - hadoop-data1-node
      - hadoop-data2-node
    roles:
-     - { role: shared, when:  ansible_os_family == "RedHat" }
+     - { role: shared, when:  ansible_os_family == "RedHat" and skip_shared is not defined }
      - { role: zookeeper, when:  ansible_os_family == "RedHat" and install_zookeeper is defined and install_zookeeper == "true"  }
      - { role: hadoop, when:  ansible_os_family == "RedHat" and install_hadoop is defined and install_hadoop == "true"  }
      - { role: kafka, when:  ansible_os_family == "RedHat" and install_kafka is defined and install_kafka == "true"  }
@@ -23,6 +23,8 @@
      - { role: cassandra, when:  ansible_os_family == "RedHat" and install_cassandra is defined and install_cassandra == "true"  }
      - { role: hbase, when:  ansible_os_family == "RedHat" and install_hbase is defined and install_hbase == "true"  }
      - { role: flink, when: ansible_os_family == "RedHat" and install_flink is defined and install_flink == "true"  }
+     - { role: flume, when: ansible_os_family == "RedHat" and install_flume is defined and install_flume == "true"  }
+
 
  - name: Installing Big Data Utilities Hive, Spark, Zeppelin, Pig, Logstash, ElasticSearch, etc.
    sudo: True
