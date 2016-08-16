@@ -54,6 +54,7 @@ install_wildfly=true
 install_zeppelin=true
 install_hbase=true
 install_flink=true
+install_flume=true
 ```
 
 ## Prerequisite:

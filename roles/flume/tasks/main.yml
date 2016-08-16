@@ -1,0 +1,24 @@
+---
+# tasks file for flume http://apachemirror.ovidiudan.com/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz
+
+- name: stat /tmp/apache-flume-1.6.0-bin.tar.gz
+  stat: path=/tmp/apache-flume-1.6.0-bin.tar.gz
+  register: flume_binary_stat
+
+- name: Downloading Apache Pig
+  get_url: url=http://apachemirror.ovidiudan.com/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz  dest=/tmp/apache-flume-1.6.0-bin.tar.gz
+  when: flume_binary_stat.stat.exists == False
+
+- name: rename file
+  command: chown hadoop:hadoop /tmp/apache-flume-1.6.0-bin.tar.gz
+
+- name: uncompress pig tarball and place in /usr/local/
+  command: tar zxf /tmp/apache-flume-1.6.0-bin.tar.gz -C /usr/local/
+
+- name: rename file
+  command: creates="/usr/local/flume" mv /usr/local/apache-flume-1.6.0-bin/  /usr/local/flume
+
+- name: uncompress tarball and place in /usr/local/
+  command: chown -R hadoop:hadoop /usr/local/flume
+
+- lineinfile: dest=/home/hadoop/.bashrc regexp="FLUME_HOME=" line="export FLUME_HOME=/usr/local/flume"

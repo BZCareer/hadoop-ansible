@@ -1,0 +1,13 @@
+{
+  "type" : "record",
+  "name" : "GeneratedCustomerBean",
+  "namespace" : "com.redhat.data.analytics.generated",
+  "doc" : "Schema for com.redhat.data.analytics.model.CustomerBean",
+  "fields" : [ {
+    "name" : "id",
+    "type" : "int"
+  }, {
+    "name" : "name",
+    "type" : [ "null", "string" ]
+  } ]
+}

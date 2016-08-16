@@ -1,0 +1,4 @@
+agent.sources = avro-listener
+agent.sources.avro-listener.type=avro
+agent.sources.avro-listener.port=41415
+agent.sources.avro-listener.channel=my-event-channel
