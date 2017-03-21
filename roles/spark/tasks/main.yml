@@ -4,25 +4,25 @@
 # When Starting spark use the following format
 # spark-shell  --master  spark://hadoopmaster:7077 --jars /usr/local/hive/lib/mysql-connector-java.jar
 
-- name: stat /tmp/spark-1.6.1-bin-hadoop2.6.tgz
-  stat: path=/tmp/spark-1.6.1-bin-hadoop2.6.tgz
+- name: stat /tmp/spark-2.1.0-bin-hadoop2.7.tgz
+  stat: path=/tmp/spark-2.1.0-bin-hadoop2.7.tgz
   register: spark_binary_stat
 
 # trying out spark 2.0.0
 # http://d3kbcqa49mib13.cloudfront.net/spark-2.0.0-preview-bin-hadoop2.7.tgz
 
 - name: Downloading Apache Spark
-  get_url: url=http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz  dest=/tmp/spark-1.6.1-bin-hadoop2.6.tgz
+  get_url: url=http://d3kbcqa49mib13.cloudfront.net/spark-2.1.0-bin-hadoop2.7.tgz  dest=/tmp/spark-2.1.0-bin-hadoop2.7.tgz
   when: spark_binary_stat.stat.exists == False
 
 - name: rename file
-  command: chown hadoop:hadoop /tmp/spark-1.6.1-bin-hadoop2.6.tgz
+  command: chown hadoop:hadoop /tmp/spark-2.1.0-bin-hadoop2.7.tgz
 
 - name: uncompress spark tarball and place in /usr/local/
-  command: tar -zxf /tmp/spark-1.6.1-bin-hadoop2.6.tgz   -C /usr/local/
+  command: tar -zxf /tmp/spark-2.1.0-bin-hadoop2.7.tgz -C /usr/local
 
 - name: rename file
-  command: creates="/usr/local/spark" mv /usr/local/spark-1.6.1-bin-hadoop2.6/  /usr/local/spark
+  command: creates="/usr/local/spark" mv /usr/local/spark-2.1.0-bin-hadoop2.7/  /usr/local/spark
 
 - name: Change owner to hadoop for all files under SPARK_HOME
   command: chown -R hadoop:hadoop  /usr/local/spark
