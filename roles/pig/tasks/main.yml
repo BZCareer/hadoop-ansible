@@ -6,7 +6,7 @@
   register: pigbinary_stat
 
 - name: Downloading Apache Pig
-  get_url: url=http://apachemirror.ovidiudan.com/pig/pig-0.15.0/pig-0.15.0.tar.gz  dest=/tmp/pig-0.15.0.tar.gz
+  get_url: url=http://apache.forsale.plus/pig/pig-0.15.0/pig-0.15.0.tar.gz  dest=/tmp/pig-0.15.0.tar.gz
   when: pigbinary_stat.stat.exists == False
 
 - name: rename file

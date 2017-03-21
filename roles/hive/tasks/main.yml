@@ -3,16 +3,16 @@
 
 # http://mirror.its.dal.ca/apache/hive/hive-2.0.0/apache-hive-2.0.0-bin.tar.gz
 
-- name: stat /tmp/apache-hive-2.0.0-bin.tar.gz
-  stat: path=/tmp/apache-hive-2.0.0-bin.tar.gz
+- name: stat /tmp/apache-hive-2.0.1-bin.tar.gz
+  stat: path=/tmp/apache-hive-2.0.1-bin.tar.gz
   register: hive_binary_stat
 
 - name: Downloading Apache Hive
-  get_url: url=http://mirror.its.dal.ca/apache/hive/hive-2.0.0/apache-hive-2.0.0-bin.tar.gz  dest=/tmp/apache-hive-2.0.0-bin.tar.gz
+  get_url: url=http://muug.ca/mirror/apache-dist/hive/hive-2.0.1/apache-hive-2.0.1-bin.tar.gz  dest=/tmp/apache-hive-2.0.1-bin.tar.gz
   when: hive_binary_stat.stat.exists == False
 
 - name: rename file
-  command: chown hadoop:hadoop /tmp/apache-hive-2.0.0-bin.tar.gz
+  command: chown hadoop:hadoop /tmp/apache-hive-2.0.1-bin.tar.gz
 
 #
 # - name: copy hive to tmp folder
@@ -22,14 +22,14 @@
 #     - provision_copy_to_remote
 
 - name: unzip tarball and place in /usr/local/
-  command: tar zxf /tmp/apache-hive-2.0.0-bin.tar.gz -C /usr/local/
+  command: tar zxf /tmp/apache-hive-2.0.1-bin.tar.gz -C /usr/local/
 
 - name: stat /usr/local/hive
   stat: path=/usr/local/hive
   register: hive_dir_stat
 
 - name: rename file
-  command: creates="/usr/local/hive" mv /usr/local/apache-hive-2.0.0-bin/  /usr/local/hive
+  command: creates="/usr/local/hive" mv /usr/local/apache-hive-2.0.1-bin/  /usr/local/hive
   when: hive_dir_stat.stat.exists == False
 
 # TODO: This step is going to be manual.
